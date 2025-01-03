@@ -15,5 +15,5 @@ jobs:
 
     - run: make test
     - run: |
-       grep -s FAIL build/results || exit 0
+       grep FAIL build/results | wc -l || exit 0
        exit 1
