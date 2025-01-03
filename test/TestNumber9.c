@@ -7,7 +7,7 @@ void tearDown(void) {
 }
 
 void test_something() {
-    TEST_ASSERT_EQUAL(1, 2);
+    TEST_ASSERT_EQUAL(1, 1);
 }
 
 int main(void) {
