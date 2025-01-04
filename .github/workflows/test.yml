@@ -14,7 +14,8 @@ jobs:
       uses: actions/checkout@v4
 
     - run: make test
-    - run: |
+    - name: Check results and set pipeline status
+      run: |
         # Directory to check
         DIR_TO_CHECK="build/results"
 
