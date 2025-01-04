@@ -15,5 +15,14 @@ jobs:
 
     - run: make test
     - run: |
-       grep -r FAIL build/results/* | wc -l || exit 0
-       exit 1
+        # Directory to check
+        DIR_TO_CHECK="build/results"
+
+        # Search for files containing the text "FAIL"
+        if grep -rq "FAIL" "$DIR_TO_CHECK"; then
+          echo "A file contains the text 'FAIL'."
+          exit 1
+        else
+          echo "No files with the text 'FAIL' found."
+          exit 0
+        fi
