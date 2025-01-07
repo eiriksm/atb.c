@@ -1,4 +1,6 @@
 #include <stddef.h>
+#include <stdlib.h>
+
 typedef struct {
     int *departure_times;
     int count;
