@@ -33,8 +33,9 @@ DepartureTimes atb_get_next_departures_route_9(int timestamp, char stop_id) {
     }
 
     for (int i = 0; i < MAX_DEPARTURES; i++) {
-        int departure_time;
-        sscanf(route_9_schedule[0][i], "%d:%d", &departure_time);
+        int departure_hour, departure_minute;
+        sscanf(route_9_schedule[0][i], "%d:%d", &departure_hour, &departure_minute);
+        int departure_time = departure_hour * 100 + departure_minute;
         if (departure_time >= timestamp) {
             result.departure_times[result.count++] = departure_time;
         }
