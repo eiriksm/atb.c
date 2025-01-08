@@ -51,8 +51,37 @@ void test_get_next_departures_route_9(void) {
     TEST_ASSERT_EQUAL(0, result.departure_times[3]);
 }
 
+void test_get_next_departure(void) {
+    int result;
+
+    // Test for route 9, stop 1
+    result = atb_get_next_departure(605, '9', 1);
+    TEST_ASSERT_EQUAL(630, result);
+
+    // Test for route 9, stop 2
+    result = atb_get_next_departure(635, '9', 2);
+    TEST_ASSERT_EQUAL(705, result);
+
+    // Test for route 9, stop 3
+    result = atb_get_next_departure(640, '9', 3);
+    TEST_ASSERT_EQUAL(710, result);
+
+    // Test for route 9, stop 4
+    result = atb_get_next_departure(645, '9', 4);
+    TEST_ASSERT_EQUAL(715, result);
+
+    // Test for route 9, stop 5
+    result = atb_get_next_departure(650, '9', 5);
+    TEST_ASSERT_EQUAL(720, result);
+
+    // Test for no next departure
+    result = atb_get_next_departure(820, '9', 5);
+    TEST_ASSERT_EQUAL(-1, result);
+}
+
 int main(void) {
   UNITY_BEGIN();
   RUN_TEST(test_get_next_departures_route_9);
+  RUN_TEST(test_get_next_departure);
   return UNITY_END();
 }
