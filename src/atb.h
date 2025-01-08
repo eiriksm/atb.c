@@ -23,6 +23,3 @@ DepartureTimes atb_get_next_departures(int timestamp, char route, char stop_id);
 DepartureTimes atb_get_next_departures_route_9(int timestamp, char stop_id);
 
 #endif
-
-// Declare the atb_get_next_departure function
-int atb_get_next_departure(int timestamp, char route, char stop_id);
