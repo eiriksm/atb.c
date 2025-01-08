@@ -28,13 +28,15 @@ DepartureTimes atb_get_next_departures_route_9(int timestamp, char stop_id) {
     DepartureTimes result;
     result.count = 0;
 
-    if (stop_id < 1 || stop_id > 5) {
+    if (stop_id != 1) {
         return result;
     }
 
     for (int i = 0; i < MAX_DEPARTURES; i++) {
-        if (route_9_schedule[stop_id - 1][i] >= timestamp) {
-            result.departure_times[result.count++] = route_9_schedule[stop_id - 1][i];
+        int departure_time;
+        sscanf(route_9_schedule[0][i], "%d:%d", &departure_time);
+        if (departure_time >= timestamp) {
+            result.departure_times[result.count++] = departure_time;
         }
     }
 
