@@ -85,6 +85,9 @@ ResultSet atb_get_next_departures(int timestamp, char* route, char* stop_id) {
                     result.resultSet[result_count] = new_timestamp;
                     result_count++;
                 }
+                if (result_count == MAX_DEPARTURES) {
+                    break;
+                }
 
             }
             break; // Exit the outer loop once the route is found
