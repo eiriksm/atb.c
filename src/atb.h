@@ -53,7 +53,7 @@ static const Route schedules[] = {
 
         // 18:42 to 23:42 every 30 minutes
         "18:42", "19:12", "19:42", "20:12", "20:42", "21:12", "21:42", "22:12", "22:42", "23:12", "23:42"
-    }, 55}}, // Total 55 departure times
+    }, 51}},
 };
 
 static const StopOffset stop_offsets[] = {
