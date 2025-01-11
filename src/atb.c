@@ -31,6 +31,10 @@ ResultSet atb_get_next_departures(int timestamp, char* route, char* stop_id) {
         }
     }
 
+    // Set the timezone to a specific value.
+    setenv("TZ", "CET", 1);
+    tzset();
+
     for (int i = 0; i < num_schedules; i++) {
         // Compare the route (string comparison)
         if (strcmp(schedules[i].route, route) == 0) {
