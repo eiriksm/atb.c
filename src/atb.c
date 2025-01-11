@@ -17,7 +17,7 @@ int atb_get_next_departure(int timestamp, char* route, char* stop_id) {
 ResultSet atb_get_next_departures(int timestamp, char* route, char* stop_id) {
     ResultSet result;
     // Calculate the number of elements in the schedules array
-    int num_schedules = sizeof(schedules);
+    int num_schedules = sizeof(schedules) / sizeof(schedules[0]);
     int num_stops = sizeof(stop_offsets);
 
     int result_count = 0;
@@ -35,9 +35,29 @@ ResultSet atb_get_next_departures(int timestamp, char* route, char* stop_id) {
     setenv("TZ", "CET", 1);
     tzset();
 
+    // Convert the integer to time_t
+    time_t ttimestamp = (time_t) timestamp;
+    struct tm *time_info = localtime(&ttimestamp);
+        if (time_info == NULL) {
+        fprintf(stderr, "Error: Could not convert timestamp.\n");
+        return result;
+    }
+
+    int day_of_week = time_info->tm_wday;
+
     for (int i = 0; i < num_schedules; i++) {
-        // Compare the route (string comparison)
+        // Compare the route (string comparison).
         if (strcmp(schedules[i].route, route) == 0) {
+            if (day_of_week == ATB_SATURDAY || day_of_week == ATB_SUNDAY) {
+                if (schedules[i].day_id != day_of_week) {
+                    continue;
+                }
+            }
+            else {
+                if (schedules[i].day_id != ATB_WEEKDAY) {
+                    continue;
+                }
+            }
             for (int j = 0; j < schedules[i].departureTimes.count; j++) {
                 // Create a timestamp from the string, and make it so the timestamp represents the same day.
                 char *hour, *minute;
@@ -48,18 +68,6 @@ ResultSet atb_get_next_departures(int timestamp, char* route, char* stop_id) {
                 // Split the buffer using strtok
                 hour = strtok(buffer, ":");
                 minute = strtok(NULL, ":");
-                // Create a timestamp from the variables above.
-                // Convert timestamp1 to local time structure
-
-                // Convert the integer to time_t
-                time_t ttimestamp = (time_t) timestamp;
-                struct tm *time_info = localtime(&ttimestamp);
-
-                if (time_info == NULL) {
-                    fprintf(stderr, "Error: Could not convert timestamp1.\n");
-                    continue;
-                }
-
                 // Convert hour and minute to integers
                 int new_hour = atoi(hour);
                 int new_minute = atoi(minute);
