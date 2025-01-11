@@ -26,6 +26,14 @@ void test_get_next_departures_route_9(void) {
     // Last on Sat.
     result = atb_get_next_departures(1736635375, "9", "71779");
     TEST_ASSERT_EQUAL(1736635620, result.resultSet[0]);
+
+    // 12.30 on Sunday.
+    result = atb_get_next_departures(1736681400, "9", "71779");
+    TEST_ASSERT_EQUAL(1736682420, result.resultSet[0]);
+
+    // Last on Sunday.
+    result = atb_get_next_departures(1736721000, "9", "71779");
+    TEST_ASSERT_EQUAL(1736722020, result.resultSet[0]);
 }
 
 int main(void) {
