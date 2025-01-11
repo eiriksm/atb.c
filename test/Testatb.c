@@ -25,7 +25,7 @@ void test_get_next_departures_route_9(void) {
 
     // Last on Sat.
     result = atb_get_next_departures(1736635375, "9", "71779");
-    TEST_ASSERT_EQUAL(1736635375, result.resultSet[0]);
+    TEST_ASSERT_EQUAL(1736635620, result.resultSet[0]);
 }
 
 int main(void) {
