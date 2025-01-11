@@ -18,6 +18,10 @@ void test_get_next_departures_route_9(void) {
     // This is a Saturday at 13:37. The next departure should be 13:47.
     int next = atb_get_next_departure(1736599075, "9", "71779");
     TEST_ASSERT_EQUAL(1736599620, next);
+
+    // This is friday the last tram.
+    result = atb_get_next_departures(1736548975, "9", "71779");
+    TEST_ASSERT_EQUAL(1736549220, result.resultSet[0]);
 }
 
 int main(void) {
