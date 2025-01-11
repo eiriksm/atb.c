@@ -2,9 +2,9 @@
 #define ATB_H
 
 #define MAX_DEPARTURES 5
-#define ATB_WEEKDAY 0
+#define ATB_WEEKDAY 1
 #define ATB_SATURDAY 6
-#define ATB_SUNDAY 7
+#define ATB_SUNDAY 0
 
 typedef struct {
     char* departure_times[100];
@@ -54,6 +54,13 @@ static const Route schedules[] = {
         // 18:42 to 23:42 every 30 minutes
         "18:42", "19:12", "19:42", "20:12", "20:42", "21:12", "21:42", "22:12", "22:42", "23:12", "23:42"
     }, 51}},
+    {"9", ATB_SUNDAY, {{
+        // Every 30 minutes from 09:12 to 23:42
+        "09:12", "09:42", "10:12", "10:42", "11:12", "11:42", "12:12", "12:42",
+        "13:12", "13:42", "14:12", "14:42", "15:12", "15:42", "16:12", "16:42",
+        "17:12", "17:42", "18:12", "18:42", "19:12", "19:42", "20:12", "20:42",
+        "21:12", "21:42", "22:12", "22:42", "23:12", "23:42"
+    }, 30}},
 };
 
 static const StopOffset stop_offsets[] = {
