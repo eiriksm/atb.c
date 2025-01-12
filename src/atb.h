@@ -7,7 +7,7 @@
 #define ATB_SUNDAY 0
 
 typedef struct {
-    char* departure_times[150];
+    char* departure_times[100];
     int count;
 } DepartureTimes;
 
