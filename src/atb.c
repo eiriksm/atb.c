@@ -18,7 +18,7 @@ ResultSet atb_get_next_departures(int timestamp, char* route, char* stop_id) {
     ResultSet result;
     // Calculate the number of elements in the schedules array
     int num_schedules = sizeof(schedules) / sizeof(schedules[0]);
-    int num_stops = sizeof(stop_offsets);
+    int num_stops = sizeof(stop_offsets) / sizeof(stop_offsets[0]);
 
     int result_count = 0;
 
