@@ -1,7 +1,12 @@
 #include "unity.h"
 #include "atb.h"
+#include <stdlib.h>
+#include <time.h>
 
 void setUp(void) {
+    // Set the timezone to a specific value.
+    setenv("TZ", "UTC", 1);
+    tzset();
 }
 
 void tearDown(void) {

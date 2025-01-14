@@ -31,10 +31,6 @@ ResultSet atb_get_next_departures(int timestamp, char* route, char* stop_id) {
         }
     }
 
-    // Set the timezone to a specific value.
-    setenv("TZ", "CET", 1);
-    tzset();
-
     // Convert the integer to time_t
     time_t ttimestamp = (time_t) timestamp;
     struct tm *time_info = localtime(&ttimestamp);
