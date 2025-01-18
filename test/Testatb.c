@@ -5,8 +5,6 @@
 
 void setUp(void) {
     // Set the timezone to a specific value.
-    setenv("TZ", "UTC", 1);
-    tzset();
 }
 
 void tearDown(void) {
