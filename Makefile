@@ -52,6 +52,15 @@ $(PATHR)%.txt: $(PATHB)%.$(TARGET_EXTENSION)
 	-./$< > $@ 2>&1
 	./$<
 
+build/results/TestatbTimezone.txt:
+	gcc -c -Werror -I. -Iunity/src/ -Isrc/ -DTEST test/TestatbTimezone.c -o build/objs/TestatbTimezone.o
+	gcc -c -Werror -I. -Iunity/src/ -Isrc/ -DTEST src/atb.c -o build/objs/atb.o
+	gcc -c -Werror -I. -Iunity/src/ -Isrc/ -DTEST unity/src/unity.c -o build/objs/unity.o
+	gcc -o build/TestatbTimezone.out build/objs/TestatbTimezone.o build/objs/atb.o build/objs/unity.o
+	-./build/TestatbTimezone.out > build/results/TestatbTimezone.txt 2>&1
+	./build/TestatbTimezone.out
+
+
 $(PATHB)Test%.$(TARGET_EXTENSION): $(PATHO)Test%.o $(PATHO)%.o $(PATHO)unity.o #$(PATHD)Test%.d
 	$(LINK) -o $@ $^
 
