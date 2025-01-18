@@ -4,7 +4,6 @@
 #include <time.h>
 
 void setUp(void) {
-    // Set the timezone to a specific value.
 }
 
 void tearDown(void) {
