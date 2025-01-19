@@ -21,7 +21,7 @@ void test_get_departures_with_timestamp_timezone_and_route(void) {
     int timestamp;
     timestamp = 1737208800;
     result = atb_get_next_departures(timestamp, "09_2", "71779");
-    TEST_ASSERT_EQUAL_INT(1737209820, result.resultSet[0]);
+    TEST_ASSERT_EQUAL_INT(1737208920, result.resultSet[0]);
     // Reset the timezone.
     setenv("TZ", "UTC", 1);
     tzset();

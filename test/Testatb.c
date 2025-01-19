@@ -12,7 +12,7 @@ void tearDown(void) {
 void test_get_next_departures_route_9(void) {
     ResultSet result;
 
-    // Test for stop 71779. This is a Wednesday at 14:00:40. The next departure
+    // Test for stop 71779. This is a Wednesday at 15:00:40. The next departure
     // should be 14:02.
     static char ROUTE_TO_TEST[] = "09_2";
     static char STOP_ID[] = "71779";
