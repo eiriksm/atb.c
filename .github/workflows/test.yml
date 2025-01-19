@@ -8,12 +8,23 @@ jobs:
   build:
     name: Unit tests
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        tz:
+          - "Africa/Bamako"
+          - "America/St_Thomas"
     steps:
 
     - name: Check out repository
       uses: actions/checkout@v4
 
-    - run: make test
+    - run: |
+        date
+        date +%s
+        make test
+      env:
+        TZ: ${{ matrix.tz }}
     - run: cat build/results/*txt
     - name: Check results and set pipeline status
       run: |
