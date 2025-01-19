@@ -32,6 +32,18 @@ int is_dst_in_cet(const struct tm *time) {
     return (current >= mktime(&dst_start) && current < mktime(&dst_end));
 }
 
+int get_cet_offset_without_setenv(time_t utc_time) {
+    struct tm *utc_tm = gmtime(&utc_time);
+    int offset = 3600; // Standard CET offset is UTC+1
+
+    // Adjust for DST
+    if (is_dst_in_cet(utc_tm)) {
+        offset += 3600; // Add 1 hour for DST
+    }
+
+    return offset;
+}
+
 int atb_get_next_departure(int timestamp, char* route, char* stop_id) {
     ResultSet departures = atb_get_next_departures(timestamp, route, stop_id);
     if (sizeof(departures.resultSet) > 0) {
@@ -58,6 +70,7 @@ ResultSet atb_get_next_departures(int timestamp, char* route, char* stop_id) {
     }
 
     // Convert the integer to time_t
+    timestamp += get_cet_offset_without_setenv();
     time_t ttimestamp = (time_t) timestamp;
     struct tm *time_info = gmtime(&ttimestamp);
         if (time_info == NULL) {
