@@ -6,6 +6,32 @@
 
 #include "atb.h"
 
+int is_dst_in_cet(const struct tm *time) {
+    int year = time->tm_year + 1900;
+
+    // Calculate last Sunday in March (DST starts)
+    struct tm dst_start = {0};
+    dst_start.tm_year = year - 1900;
+    dst_start.tm_mon = 2; // March
+    dst_start.tm_mday = 31; // Last day of March
+    dst_start.tm_hour = 2; // 2 AM
+    mktime(&dst_start);
+    while (dst_start.tm_wday != 0) dst_start.tm_mday--;
+
+    // Calculate last Sunday in October (DST ends)
+    struct tm dst_end = {0};
+    dst_end.tm_year = year - 1900;
+    dst_end.tm_mon = 9; // October
+    dst_end.tm_mday = 31; // Last day of October
+    dst_end.tm_hour = 3; // 3 AM
+    mktime(&dst_end);
+    while (dst_end.tm_wday != 0) dst_end.tm_mday--;
+
+    // Check if the given time is within the DST period
+    time_t current = mktime((struct tm *)time);
+    return (current >= mktime(&dst_start) && current < mktime(&dst_end));
+}
+
 int atb_get_next_departure(int timestamp, char* route, char* stop_id) {
     ResultSet departures = atb_get_next_departures(timestamp, route, stop_id);
     if (sizeof(departures.resultSet) > 0) {
