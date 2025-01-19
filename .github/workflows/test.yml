@@ -19,7 +19,10 @@ jobs:
     - name: Check out repository
       uses: actions/checkout@v4
 
-    - run: make test
+    - run: |
+        date
+        date +%s
+        make test
       env:
         TZ: ${{ matrix.tz }}
     - run: cat build/results/*txt
