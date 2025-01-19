@@ -14,14 +14,14 @@ jobs:
         tz:
           - "Africa/Bamako"
           - "America/St_Thomas"
+          - "UTC"
+          - "Europe/Berlin"
     steps:
 
     - name: Check out repository
       uses: actions/checkout@v4
 
     - run: |
-        date
-        date +%s
         make test
       env:
         TZ: ${{ matrix.tz }}
