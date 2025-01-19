@@ -51,6 +51,8 @@ int get_cet_offset_without_setenv(time_t utc_time) {
         offset += 3600; // Add 1 hour for DST
     }
 
+    printf("%d\n, offset);
+
     return offset;
 }
 
