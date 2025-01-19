@@ -70,8 +70,8 @@ ResultSet atb_get_next_departures(int timestamp, char* route, char* stop_id) {
     }
 
     // Convert the integer to time_t
-    timestamp += get_cet_offset_without_setenv();
     time_t ttimestamp = (time_t) timestamp;
+    ttimestamp += get_cet_offset_without_setenv(ttimestamp);
     struct tm *time_info = gmtime(&ttimestamp);
         if (time_info == NULL) {
         fprintf(stderr, "Error: Could not convert timestamp.\n");
