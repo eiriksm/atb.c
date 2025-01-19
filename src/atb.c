@@ -33,7 +33,7 @@ ResultSet atb_get_next_departures(int timestamp, char* route, char* stop_id) {
 
     // Convert the integer to time_t
     time_t ttimestamp = (time_t) timestamp;
-    struct tm *time_info = localtime(&ttimestamp);
+    struct tm *time_info = gmtime(&ttimestamp);
         if (time_info == NULL) {
         fprintf(stderr, "Error: Could not convert timestamp.\n");
         return result;
