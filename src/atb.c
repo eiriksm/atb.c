@@ -128,8 +128,8 @@ ResultSet atb_get_next_departures(int timestamp, char* route, char* stop_id) {
                 time_t new_timestamp = timegm(time_info);
                 new_timestamp += stop_offset_in_minutes * 60;
                 // Check if the departure time is after the given timestamp
-                if (new_timestamp >= timestamp) {
-                    result.resultSet[result_count] = new_timestamp;
+                if (new_timestamp >= ttimestamp) {
+                    result.resultSet[result_count] = new_timestamp -= get_cet_offset_without_setenv(new_timestamp);
                     result_count++;
                 }
                 if (result_count == MAX_DEPARTURES) {
