@@ -13,19 +13,29 @@ int is_dst_in_cet(const struct tm *time) {
     struct tm dst_start = {0};
     dst_start.tm_year = year - 1900;
     dst_start.tm_mon = 2; // March
-    dst_start.tm_mday = 31; // Last day of March
-    dst_start.tm_hour = 2; // 2 AM
+    dst_start.tm_mday = 31; // Start with the last day of March
+    dst_start.tm_hour = 2; // DST starts at 02:00
     mktime(&dst_start);
-    while (dst_start.tm_wday != 0) dst_start.tm_mday--;
+
+    // Move back to the previous Sunday if needed
+    while (dst_start.tm_wday != 0) {
+        dst_start.tm_mday--;
+        mktime(&dst_start); // Normalize the structure
+    }
 
     // Calculate last Sunday in October (DST ends)
     struct tm dst_end = {0};
     dst_end.tm_year = year - 1900;
     dst_end.tm_mon = 9; // October
-    dst_end.tm_mday = 31; // Last day of October
-    dst_end.tm_hour = 3; // 3 AM
+    dst_end.tm_mday = 31; // Start with the last day of October
+    dst_end.tm_hour = 3; // DST ends at 03:00
     mktime(&dst_end);
-    while (dst_end.tm_wday != 0) dst_end.tm_mday--;
+
+    // Move back to the previous Sunday if needed
+    while (dst_end.tm_wday != 0) {
+        dst_end.tm_mday--;
+        mktime(&dst_end); // Normalize the structure
+    }
 
     // Check if the given time is within the DST period
     time_t current = mktime((struct tm *)time);
