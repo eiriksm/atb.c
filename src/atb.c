@@ -6,6 +6,16 @@
 
 #include "atb.h"
 
+/**
+ * The following timegm stuff was copied directly from stack overflow.
+ *
+ * I renamed the function so we can actually use literally the same timegm
+ * on all platforms, instead of subtle differences if we were so lucky that
+ * timegm was in fact available.
+ *
+ * https://stackoverflow.com/a/58037981
+ */
+
 // Algorithm: http://howardhinnant.github.io/date_algorithms.html
 int days_from_epoch(int y, int m, int d)
 {
