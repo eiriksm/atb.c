@@ -92,9 +92,27 @@ void test_get_next_departures_route_11(void) {
   TEST_ASSERT_EQUAL_STRING("20:05", time_str);
 }
 
+void test_get_next_departures_route_9_to_lian(void) {
+  ResultSet result;
+  static char ROUTE_TO_TEST[] = "09_1";
+  static char STOP_ID[] = "74061";
+
+  time_t timestamp = get_time_in_cet_from_string("2025-01-30 20:00:00");
+  result = atb_get_next_departures(timestamp, ROUTE_TO_TEST, STOP_ID);
+  char time_str[6];
+  unix_timestamp_to_hhmm(result.resultSet[0], time_str, sizeof(time_str));
+  TEST_ASSERT_EQUAL_STRING("20:15", time_str);
+
+  timestamp = get_time_in_cet_from_string("2025-02-01 20:00:00");
+  result = atb_get_next_departures(timestamp, ROUTE_TO_TEST, STOP_ID);
+  unix_timestamp_to_hhmm(result.resultSet[0], time_str, sizeof(time_str));
+  TEST_ASSERT_EQUAL_STRING("20:15", time_str);
+}
+
 int main(void) {
   UNITY_BEGIN();
   RUN_TEST(test_get_next_departures_route_9);
   RUN_TEST(test_get_next_departures_route_11);
+  RUN_TEST(test_get_next_departures_route_9_to_lian);
   return UNITY_END();
 }
