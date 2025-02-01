@@ -79,13 +79,18 @@ void test_get_next_departures_route_11(void) {
   // in 74265 20 mins later.
   static char ROUTE_TO_TEST[] = "11_1";
   static char STOP_ID[] = "74265";
-  // Do a helper for getting the time at that exact day and time in CET.
-  // 2025-01-30 20:00:00.
+  
   time_t timestamp = get_time_in_cet_from_string("2025-01-30 20:00:00");
   result = atb_get_next_departures(timestamp, ROUTE_TO_TEST, STOP_ID);
   char time_str[6];
   unix_timestamp_to_hhmm(result.resultSet[0], time_str, sizeof(time_str));
   TEST_ASSERT_EQUAL_STRING("20:08", time_str);
+
+  time_t timestamp = get_time_in_cet_from_string("2025-02-01 20:00:00");
+  result = atb_get_next_departures(timestamp, ROUTE_TO_TEST, STOP_ID);
+  char time_str[6];
+  unix_timestamp_to_hhmm(result.resultSet[0], time_str, sizeof(time_str));
+  TEST_ASSERT_EQUAL_STRING("20:05", time_str);
 }
 
 int main(void) {
