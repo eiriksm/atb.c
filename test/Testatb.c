@@ -109,10 +109,33 @@ void test_get_next_departures_route_9_to_lian(void) {
   TEST_ASSERT_EQUAL_STRING("20:15", time_str);
 }
 
+void test_get_next_departures_route_11_from_risvollan(void) {
+  ResultSet result;
+  static char ROUTE_TO_TEST[] = "11_3";
+  static char STOP_ID[] = "71204";
+
+  time_t timestamp = get_time_in_cet_from_string("2025-01-30 20:01:00");
+  result = atb_get_next_departures(timestamp, ROUTE_TO_TEST, STOP_ID);
+  char time_str[6];
+  unix_timestamp_to_hhmm(result.resultSet[0], time_str, sizeof(time_str));
+  TEST_ASSERT_EQUAL_STRING("20:20", time_str);
+
+  timestamp = get_time_in_cet_from_string("2025-02-01 20:01:00");
+  result = atb_get_next_departures(timestamp, ROUTE_TO_TEST, STOP_ID);
+  unix_timestamp_to_hhmm(result.resultSet[0], time_str, sizeof(time_str));
+  TEST_ASSERT_EQUAL_STRING("20:20", time_str);
+
+  timestamp = get_time_in_cet_from_string("2025-02-03 14:05:00");
+  result = atb_get_next_departures(timestamp, ROUTE_TO_TEST, STOP_ID);
+  unix_timestamp_to_hhmm(result.resultSet[0], time_str, sizeof(time_str));
+  TEST_ASSERT_EQUAL_STRING("14:10", time_str);
+}
+
 int main(void) {
   UNITY_BEGIN();
   RUN_TEST(test_get_next_departures_route_9);
   RUN_TEST(test_get_next_departures_route_11);
   RUN_TEST(test_get_next_departures_route_9_to_lian);
+  RUN_TEST(test_get_next_departures_route_11_from_risvollan);
   return UNITY_END();
 }
