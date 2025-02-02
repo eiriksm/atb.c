@@ -90,6 +90,11 @@ void test_get_next_departures_route_11(void) {
   result = atb_get_next_departures(timestamp, ROUTE_TO_TEST, STOP_ID);
   unix_timestamp_to_hhmm(result.resultSet[0], time_str, sizeof(time_str));
   TEST_ASSERT_EQUAL_STRING("20:05", time_str);
+
+  timestamp = get_time_in_cet_from_string("2025-02-02 06:40:00");
+  result = atb_get_next_departures(timestamp, ROUTE_TO_TEST, STOP_ID);
+  unix_timestamp_to_hhmm(result.resultSet[0], time_str, sizeof(time_str));
+  TEST_ASSERT_EQUAL_STRING("06:45", time_str);
 }
 
 void test_get_next_departures_route_9_to_lian(void) {
