@@ -31,7 +31,7 @@ SRCT = $(wildcard $(PATHT)*.c)
 COMPILE=gcc -c -Werror
 LINK=gcc
 DEPEND=gcc -MM -MG -MF
-CFLAGS=-I. -I$(PATHU) -I$(PATHS) -DTEST
+CFLAGS=-I. -I$(PATHU) -I$(PATHS) -DTEST -DATB_INCLUDE_ROUTE_9
 
 RESULTS = $(patsubst $(PATHT)Test%.c,$(PATHR)Test%.txt,$(SRCT) )
 
