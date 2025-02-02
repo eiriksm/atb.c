@@ -5,8 +5,6 @@
 #include <string.h>
 #include <time.h>
 
-#define ATB_INCLUDE_ROUTE_9
-
 void setUp(void) {
 }
 
