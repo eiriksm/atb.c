@@ -27,6 +27,8 @@ PATHR = build/results/
 BUILD_PATHS = $(PATHB) $(PATHD) $(PATHO) $(PATHR)
 
 SRCT = $(wildcard $(PATHT)*.c)
+# Every test links against all library sources.
+OBJS = $(patsubst $(PATHS)%.c,$(PATHO)%.o,$(wildcard $(PATHS)*.c))
 
 COMPILE=gcc -c -Werror
 LINK=gcc
@@ -52,16 +54,7 @@ $(PATHR)%.txt: $(PATHB)%.$(TARGET_EXTENSION)
 	-./$< > $@ 2>&1
 	./$<
 
-build/results/TestatbTimezone.txt:
-	gcc -c -Werror -I. -Iunity/src/ -Isrc/ -DTEST test/TestatbTimezone.c -o build/objs/TestatbTimezone.o
-	gcc -c -Werror -I. -Iunity/src/ -Isrc/ -DTEST src/atb.c -o build/objs/atb.o
-	gcc -c -Werror -I. -Iunity/src/ -Isrc/ -DTEST unity/src/unity.c -o build/objs/unity.o
-	gcc -o build/TestatbTimezone.out build/objs/TestatbTimezone.o build/objs/atb.o build/objs/unity.o
-	-./build/TestatbTimezone.out > build/results/TestatbTimezone.txt 2>&1
-	./build/TestatbTimezone.out
-
-
-$(PATHB)Test%.$(TARGET_EXTENSION): $(PATHO)Test%.o $(PATHO)%.o $(PATHO)unity.o #$(PATHD)Test%.d
+$(PATHB)Test%.$(TARGET_EXTENSION): $(PATHO)Test%.o $(OBJS) $(PATHO)unity.o #$(PATHD)Test%.d
 	$(LINK) -o $@ $^
 
 $(PATHO)%.o:: $(PATHT)%.c
