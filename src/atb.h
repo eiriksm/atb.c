@@ -1,6 +1,8 @@
 #ifndef ATB_H  // Include guard to prevent multiple inclusions
 #define ATB_H
 
+#include <stdbool.h>
+
 #define MAX_DEPARTURES 5
 #define ATB_WEEKDAY 1
 #define ATB_SATURDAY 6
@@ -27,6 +29,23 @@ typedef struct route {
     DepartureTimes departureTimes;
 } Route;
 
+/**
+ * Reads the next line of a schedule file into buf (at most len - 1 chars plus
+ * a null terminator, trailing newline optional). Returns false at end of file.
+ */
+typedef bool (*atb_line_reader_t)(void *ctx, char *buf, int len);
+
+typedef struct {
+    // Top left label, up to 3 characters.
+    char label[4];
+    // Top right label, up to 2 characters.
+    char route_label[3];
+} AtbEntryInfo;
+
+// Longest line the schedule file parser handles. Longer lines are truncated.
+#define ATB_FILE_LINE_MAX 128
+
+#ifndef ATB_NO_BUILTIN_SCHEDULES
 static const Route schedules[] = {
     // 09_2 is the tram from Lian towards Sentrum.
     {"09_2", ATB_WEEKDAY, {{"05:57", "06:12", "06:27", "06:42", "06:57", "07:12", "07:27", "07:42", "07:57", "08:12", "08:27", "08:42", "08:57", "09:12", "09:27", "09:42", "09:57", "10:12", "10:27", "10:42", "10:57", "11:12", "11:27", "11:42", "11:57", "12:12", "12:27", "12:42", "12:57", "13:12", "13:27", "13:42", "13:57", "14:12", "14:27", "14:42", "14:57", "15:12", "15:27", "15:42", "15:57", "16:12", "16:27", "16:42", "16:57", "17:12", "17:27", "17:42", "17:57", "18:12", "18:42", "19:12", "19:42", "20:12", "20:42", "21:12", "21:42", "22:12", "22:42", "23:12", "23:42"}, 61}},
@@ -65,10 +84,22 @@ static const StopOffset stop_offsets[] = {
     // This is the first stop from Risvollan.
     {"75201", "11_3", 0},
 };
+#endif
 
 
 // Function prototypes (declarations)
+#ifndef ATB_NO_BUILTIN_SCHEDULES
 int atb_get_next_departure(int timestamp, char* route, char* stop_id);
 ResultSet atb_get_next_departures(int timestamp, char* route, char* stop_id);
+#endif
+
+/*
+ * Schedule file API. The file format is described in README.md. The reader is
+ * consumed from wherever it currently is, so callers rewind it between calls.
+ */
+int atb_file_count_entries(atb_line_reader_t reader, void *ctx);
+bool atb_file_get_entry(atb_line_reader_t reader, void *ctx, int index, AtbEntryInfo *info);
+// Unused slots in the result are 0.
+ResultSet atb_file_next_departures(int timestamp, atb_line_reader_t reader, void *ctx, int index);
 
 #endif
